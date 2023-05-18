@@ -3,7 +3,7 @@ import fitz  # PyMuPDF
 from PIL import Image
 
 st.set_page_config(
-    page_title="PDF reader",
+    page_title="PDF Reader",
     page_icon="📖",
     layout="centered")
 
