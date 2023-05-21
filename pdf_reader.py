@@ -1,6 +1,7 @@
 import streamlit as st
 import fitz  # PyMuPDF
 from PIL import Image
+import streamlit.experimental_rerun as rerun
 
 st.set_page_config(
     page_title="PDF Reader",
@@ -44,6 +45,9 @@ def main():
         st.write("---")
         st.write("This page is reserved. All rights reserved. \u00A9")
 
+        # Display the uploaded file name as the title
+        st.write(f"PDF: {uploaded_file.name}")
+
         # Zoom buttons
         st.write("Zoom:")
         zoom_in = st.button("Zoom In")
@@ -52,13 +56,13 @@ def main():
         # Handle button clicks
         if zoom_in:
             zoom_factor += 0.1
-            st.caching.clear_cache()  # Clear the cache to update the displayed images
+            rerun()  # Rerun the app to update the displayed images
 
         if zoom_out:
             zoom_factor -= 0.1
             if zoom_factor < 0.1:
                 zoom_factor = 0.1
-            st.caching.clear_cache()  # Clear the cache to update the displayed images
+            rerun()  # Rerun the app to update the displayed images
 
 if __name__ == "__main__":
     main()
