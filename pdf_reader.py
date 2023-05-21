@@ -1,13 +1,11 @@
 import streamlit as st
 import fitz  # PyMuPDF
 from PIL import Image
-import streamlit.experimental_rerun as rerun
 
 st.set_page_config(
     page_title="PDF Reader",
     page_icon="📖",
-    layout="centered"
-)
+    layout="centered")
 
 def convert_pdf_to_images(file):
     pdf = fitz.open(stream=file.read(), filetype="pdf")
@@ -22,12 +20,6 @@ def convert_pdf_to_images(file):
 
     return images
 
-def zoom_image(image, zoom_factor):
-    width, height = image.size
-    new_width = int(width * zoom_factor)
-    new_height = int(height * zoom_factor)
-    resized_image = image.resize((new_width, new_height))
-    return resized_image
 
 def main():
     st.title("PDF Reader")
@@ -36,33 +28,14 @@ def main():
     if uploaded_file is not None:
         images = convert_pdf_to_images(uploaded_file)
 
-        zoom_factor = 1.0  # Initial zoom factor
-
         for idx, image in enumerate(images):
-            zoomed_image = zoom_image(image, zoom_factor)
-            st.image(zoomed_image, caption=f"Page {idx + 1}")
+            st.image(image, caption=f"Page {idx + 1}")
 
-        st.write("---")
-        st.write("This page is reserved. All rights reserved. \u00A9")
-
-        # Display the uploaded file name as the title
-        st.write(f"PDF: {uploaded_file.name}")
-
-        # Zoom buttons
-        st.write("Zoom:")
-        zoom_in = st.button("Zoom In")
-        zoom_out = st.button("Zoom Out")
-
-        # Handle button clicks
-        if zoom_in:
-            zoom_factor += 0.1
-            rerun()  # Rerun the app to update the displayed images
-
-        if zoom_out:
-            zoom_factor -= 0.1
-            if zoom_factor < 0.1:
-                zoom_factor = 0.1
-            rerun()  # Rerun the app to update the displayed images
 
 if __name__ == "__main__":
     main()
+st.write("---")
+st.write("This page is reserved. All rights reserved. :copyright:")
+
+st.markdown("Credit : [Jasser](https://www.facebook.com/jasser.razzek.3/)")
+
